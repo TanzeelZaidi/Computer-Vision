@@ -1,0 +1,28 @@
+# Central configuration for License Plate Detection & Recognition
+
+detection:
+  weights: models/best.pt        # path to trained YOLOv8 weights (falls back to yolov8n.pt if missing)
+  base_model: yolov8n.pt         # starting checkpoint used for training/transfer learning
+  conf_threshold: 0.35           # minimum confidence to keep a detection
+  iou_threshold: 0.45            # NMS IoU threshold
+  img_size: 640
+
+training:
+  epochs: 100
+  batch_size: 16
+  img_size: 640
+  patience: 20                   # early stopping patience
+  device: 0                      # GPU index, or "cpu"
+  project: runs/train
+  name: lp_detector
+
+ocr:
+  engine: easyocr                # easyocr | tesseract
+  languages: ["en"]
+  min_confidence: 0.4
+  allow_list: "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-"
+
+io:
+  output_dir: outputs
+  save_annotated: true
+  save_csv: true
